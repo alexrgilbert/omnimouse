@@ -129,7 +129,11 @@ def get_dataset_list(list_name: str):
                 module_instance = current_module
                 break # Stop searching once found
         except ImportError:
-            print(f"Could not import module '{module_name}'.")
+            # Not every module in this list ships in every distribution of the repo
+            # (e.g. `sandbox` is internal-only), so a missing module is not an error.
+            logging.getLogger(__name__).debug(
+                f"Optional dataset-collection module '{module_name}' not present."
+            )
 
     # If found in one of the modules, return the attribute's value
     if found_module and module_instance:
