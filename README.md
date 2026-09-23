@@ -94,7 +94,28 @@ pip install -e .
 
 The dataloader depends on [`experanto`](https://github.com/sensorium-competition/experanto), which is installed automatically from the pinned git revision in `pyproject.toml`.
 
-For containerised environments (Docker, Apptainer/Singularity on HPC), see [`docs/INSTALL.md`](docs/INSTALL.md).
+### Containers
+
+A devcontainer is provided for local GPU workstations. Copy `.env.example` to `.env`, add your user IDs, then **Reopen in Container** in VS Code:
+
+```bash
+cp .env.example .env
+echo -e "USER_ID=$(id -u)\nGROUP_ID=$(id -g)\nUSERNAME=$(whoami)" >> .env
+```
+
+The same image can be built directly for HPC use:
+
+```bash
+docker compose build omnimouse-dev
+```
+
+For Apptainer/Singularity on clusters without Docker, convert the built image:
+
+```bash
+apptainer build omnimouse.sif docker-daemon://${USER}-omnimouse:latest
+```
+
+The container requires the NVIDIA runtime (`runtime: nvidia` in [`docker-compose.yml`](docker-compose.yml)) and mounts the repo at `/src/omnimouse`.
 
 ## Data Preparation
 
