@@ -1,6 +1,6 @@
 {
   "name": "${localEnv:USER}-omnimouse",
-  "dockerComposeFile": "../docker-compose.new.yaml",
+  "dockerComposeFile": "../docker-compose.yml",
   "service": "omnimouse-dev",
   "runServices": ["omnimouse-dev"],
   "workspaceFolder": "/src/omnimouse",
